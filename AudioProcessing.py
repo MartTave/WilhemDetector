@@ -73,9 +73,3 @@ with open("C:/Users/capma/Desktop/ADSR/peak_times.txt", "w") as file:
 
 print("Peak times written to peak_times.txt")
 
-
-
-
-
-
-print("Hello")
