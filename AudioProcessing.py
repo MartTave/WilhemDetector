@@ -13,21 +13,23 @@ from scipy.io import wavfile
 scream_file = "C:/Users/capma/Desktop/ADSR/scream.wav"
 movie_file = "C:/Users/capma/Desktop/ADSR/movie.wav"
 movie6_file = "C:/Users/capma/Desktop/ADSR/movie6.wav"
+wilhelm_audio_file = "C:/Users/capma/Desktop/ADSR/wilhelm_audio.wav"
 
 #load audio files
 scream, srr = librosa.load(scream_file)
 movie6, sr = librosa.load(movie6_file)
+wilhelm_audio, sample_rate = librosa.load(wilhelm_audio_file)
 
 #display
-ipd.Audio(movie6_file)
+ipd.Audio(wilhelm_audio_file)
 
 # duration of 1 sample
-sample_duration = 1 / sr
+sample_duration = 1 / sample_rate
 print(f"Duration of 1 sample is: {sample_duration:.6f} seconds")
 
 #duration of the audio signal in seconds
-duration_movie6 = sample_duration * len(movie6)
-print(f"Duration of the signal is: {duration_movie6:2f} seconds")
+duration_wilhelm_audio = sample_duration * len(wilhelm_audio)
+print(f"Duration of the signal is: {duration_wilhelm_audio:2f} seconds")
 #duration of the scream signal in seconds
 duration_scream = sample_duration * len(scream)
 print(f"Duration of the signal is: {duration_scream:2f} seconds")
@@ -36,13 +38,13 @@ def checkCorrelate (template, test):
 
     return np.convolve(template,test, mode='same')
 
-resultCorrelate = checkCorrelate(scream, movie6)
+resultCorrelate = checkCorrelate(scream, wilhelm_audio)
 
 #display result
 librosa.display.waveshow(resultCorrelate, axis="s")
 
 sampleNumberScream = duration_scream*sr
-peaks, _ = find_peaks(resultCorrelate, height=27, threshold=2, distance=sampleNumberScream)
+peaks, _ = find_peaks(resultCorrelate, height=5, distance=sampleNumberScream)
 plt.plot(resultCorrelate)
 plt.plot(peaks, resultCorrelate[peaks], "o")
 plt.show()
